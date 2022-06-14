@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  <meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+       <title>Satisfaction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .chartMenu {
+            width: 100vw;
+            height: 40px;
+            background: #1A1A1A;
+            color: rgba(255, 26, 104, 1);
+        }
+
+        .chartMenu p {
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .chartCard {
+            width: 100vw;
+            height: calc(100vh - 40px);
+            background: #20b5da;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chartBox {
+            width: 700px;
+            padding: 20px;
+            border-radius: 20px;
+            border: solid 3px rgba(255, 26, 104, 1);
+            background: white;
+        }
+    </style>  
+ 
+
+</head>
+<body id="page-top">
+  
+  <center>
+  
+    <br>
+<div id="title" style="font-weight: bold; font-size: 50px;">Tableau de bords</div>
+<br>
+ <div class="chartMenu">
+        <p>Diagramme de Satisfaction</p>
+    </div>
+    <div class="chartCard">
+        <div class="chartBox">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        drawChart();
+        // setup 
+        async function drawChart() {
+            const datapoints = await getData();
+            const data = {
+                labels: datapoints.labels,
+                datasets: [
+               {
+                   label: 'Age',
+                   data: datapoints.stockdata1,
+                   backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                   borderColor: 'rgba(54, 26, 104, 1)',
+                   tension: 0.4
+                },
+                //{
+                  // label: 'Age',
+                   //data: datapoints.stockdata2,
+                   //backgroundColor: 'rgba(255, 26, 104, 0.2)',
+                   //borderColor: 'rgba(255, 26, 104, 1)',
+                   //tension: 0.2
+                //},
+                {
+                    label: 'Moyenne',
+                    data: datapoints.stockdata3,
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(0, 90, 0, 1)',
+                    tension: 0.4
+                }]
+            };
+
+            // config 
+            const config = {
+                type: 'bar',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            // render init block
+            const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        };
+
+        async function getData() {
+            const labels = [];
+            const stockdata1 = [];
+            const stockdata2 = [];
+            const stockdata3 = [];
+            const url = "http://localhost/Projet3/Formulaire/atp_wta.csv";
+            const response = await fetch(url);
+            const tabledata = await response.text();
+            const table = tabledata.split('\n');
+            table.forEach(row => {
+                const colum = row.split(',');
+
+                const nom = colum[0];
+                const age = colum[1];
+                const genre = colum[2];
+                const moyenne = colum[3];
+                labels.push(nom);
+                stockdata1.push(age);
+                stockdata2.push(genre);
+                stockdata3.push(moyenne);
+            });
+
+            const stockname1 = 'a';
+            const stockname2 = 'a';
+            const stockname3 = 'a';
+
+            console.log(stockdata1);
+            return {
+                labels, stockdata1, stockdata2, stockdata3, stockname1,
+                stockname2, stockname3
+            }
+        }
+
+
+
+    </script>
+
+
+
+
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    
+
+
+
+
+<!--
+
+// Request data using D2
+//d2.csv("http://localhost/Kitcheeze/Enquete/atp_wta.csv")
+http://127.0.0.1:5501/PPP/kitcheeze/Enquete/atp_wta.csv
+// .then(makeChart);
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<br><br>
+<a class="btn btn-primary btn-xl text-uppercase" href="/Projet3/association.html">Retourner vers le site</a>
+
+<br><br>
+<!-- Footer-->
+<section class="page-section" id="contact"> 
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>  
+</section>
+
+<footer class="footer py-4">
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-4 text-lg-start">Copyright &copy; Kitcheeze 2021</div>
+        <div class="col-lg-4 my-3 my-lg-0">
+            <a class="btn btn-dark btn-social mx-2" href="#!"><img src="../Images/Icones/facebook.png" width="30" height="30"></i></a>
+            <a class="btn btn-dark btn-social mx-2" href="#!"><img src="../Images/Icones/instagram.png" width="40" height="40"></i></a>
+            <a class="btn btn-dark btn-social mx-2" href="#!"><img src="../Images/Icones/twitter.png" width="30" height="30"></i></a>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+            <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+        </div>
+    </div>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="../js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
